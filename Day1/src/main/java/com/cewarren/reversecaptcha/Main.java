@@ -7,8 +7,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.apache.commons.math3.analysis.function.Log;
-
 public class Main {
 	public static void main(String[] args) throws IOException {
 		ArrayList<Integer> accessCode = new ArrayList<Integer>();
