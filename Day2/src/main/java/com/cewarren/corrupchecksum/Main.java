@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.stream.Stream;
 
 public class Main {
@@ -14,7 +15,7 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		ArrayList<String> data = new ArrayList<String>();
 		ArrayList<ArrayList<Integer>> intMatrix = new ArrayList<ArrayList<Integer>>();
-		Path path = Paths.get(URI.create(Main.class.getResource("/resources/input.txt").toString()));
+		Path path = Paths.get(URI.create(Main.class.getResource("resources/input.txt").toString()));
 		
 		Stream<String> lines = Files.lines(path);
 		lines.forEach(line -> data.add(line));
@@ -23,8 +24,11 @@ public class Main {
 		intMatrix = getIntMatrix(data);
 		
 		int result = calcChecksum(intMatrix);
+		System.out.println("Result part 1: " + String.valueOf(result));
 		
-		System.out.println(String.valueOf(result));
+		result = 0;
+		result = calcSumEvenlyDivisable(intMatrix);
+		System.out.println("Result part 2: " + String.valueOf(result));
 
 	}
 	
@@ -68,5 +72,28 @@ public class Main {
 		return checksum;
 	}
 	
+	private static int calcSumEvenlyDivisable(ArrayList<ArrayList<Integer>> matrix) {
+		int sum = 0;
+		ArrayList<Integer> divList = new ArrayList<Integer>();
+		//find the two numbers within each row that are evenly divisible, then find the total sum
+		for(ArrayList<Integer> currRow : matrix) {
+			currRow.sort(Collections.reverseOrder());
+			int rowSize = currRow.size();
+			
+			for(int currVal : currRow) {
+				for(int i = 0; i < rowSize; i++) {
+					int compareVal = currRow.get(i);
+					if(!(currVal == compareVal || currVal < compareVal)) {
+						if(currVal % compareVal == 0) {
+							sum += currVal / compareVal;
+						}
+					}
+				}
+			}
+		}
+		
+		
+		return sum;
+	}
 
 }
