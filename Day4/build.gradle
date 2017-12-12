@@ -27,3 +27,11 @@ dependencies {
     testImplementation 'junit:junit:4.12'
 }
 
+sourceSets {
+	main {
+		resources {
+			srcDirs = ["src/main/resources"]
+			includes = ["**/*.txt"]
+		}
+	}
+}

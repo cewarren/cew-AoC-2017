@@ -31,14 +31,19 @@ public class Main {
 		});
 		lines.close();
 		
-		result = calcInvalidPassphrases(passList);
+		result = calcInvalidPassphrases(passList, false);
 		
-		System.out.println("Number of Invalid Phrases: " + String.valueOf(result));
+		System.out.println("Number of Valid Phrases: " + String.valueOf(result));
+		
+		result = 0;
+		result = calcInvalidPassphrases(passList, true);
+		
+		System.out.println("Number of Valid Phrases (Anagram): " + String.valueOf(result));
 		
 
 	}
 	
-	private static int calcInvalidPassphrases(ArrayList<ArrayList<String>> list) {
+	private static int calcInvalidPassphrases(ArrayList<ArrayList<String>> list, boolean checkAnagram) {
 		//loop through each AL within the main AL and compare the words contained within
 		int rslt = 0;
 		boolean isInvalid = false;
@@ -47,27 +52,46 @@ public class Main {
 		for(ArrayList<String> currRow : list) {
 			reversed.addAll(currRow);
 			Collections.reverse(reversed);
-			//System.out.println("Current Row: " + currRow.toString());
 			for(String currItem : currRow) {
 				reversed.remove(reversed.size() - 1);
 				for(String compItem : reversed) {
-					//System.out.println(currItem + " : "  + compItem + " :: " + String.valueOf(currItem.equals(compItem)));
-					if(currItem.equals(compItem)) {
-						isInvalid = true;
-						break;
+					if (!checkAnagram) {
+						if (currItem.equals(compItem)) { isInvalid = true; break; } 
+						else isInvalid = false;
 					} else {
-						isInvalid = false;
+						isInvalid = isInvalidWithAnagram(currItem, compItem);
+						if(isInvalid) break;
 					}
 				}
 				if(isInvalid) break;
 			}
 			if(!isInvalid) rslt += 1;
-			//System.out.println(String.valueOf(rslt));
 			reversed.clear();
 			
 		}
 		
 		return rslt;
+	}
+	
+	private static boolean isInvalidWithAnagram(String firstWord, String secondWord) {
+		//same as above, except now a passphrase is invalid if there are any anagrams.
+		//anagrams have all the same letters.
+		//you can take each work and do to char array, sort the char array, and then compare.
+		boolean isInvalid = false;
+		List<String> firstList = new ArrayList<String>();
+		List<String> secondList = new ArrayList<String>();
+		
+		firstList.addAll(Arrays.asList(firstWord.split("")));
+		secondList.addAll(Arrays.asList(secondWord.split("")));
+		
+		firstList.sort(null);
+		secondList.sort(null);
+		
+		if(firstList.equals(secondList)) isInvalid = true;
+		else isInvalid = false;
+		
+		
+		return isInvalid;
 	}
 
 }
