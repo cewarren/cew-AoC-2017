@@ -74,7 +74,6 @@ public class Main {
 	
 	private static int calcSumEvenlyDivisable(ArrayList<ArrayList<Integer>> matrix) {
 		int sum = 0;
-		ArrayList<Integer> divList = new ArrayList<Integer>();
 		//find the two numbers within each row that are evenly divisible, then find the total sum
 		for(ArrayList<Integer> currRow : matrix) {
 			currRow.sort(Collections.reverseOrder());

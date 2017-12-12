@@ -77,7 +77,6 @@ public class Main {
 	private static int getSumLongCompare(ArrayList<Integer> intArray) {
 		int sum = 0;
 		int arraySize = intArray.size();
-		int maxIndex = arraySize - 1;
 		int comparedIndex = arraySize / 2;
 
 		//Compare the current digit with the digit halfway around the array. if they match,
