@@ -5,16 +5,28 @@ public class Main {
 	public static final int UP = 0;
 	public static void main(String[] args) {
 		//int input = 277678;
-		int input = 1024;
-		int indexSize = (int) Math.ceil(Math.sqrt((double) input)) - 1; 
-		int tblMaxVal = (int) Math.pow(Math.ceil(Math.sqrt((double) input)), 2);
-		int midpoint = indexSize / 2;
-		int inputMaxValDiff = tblMaxVal - input;
-		int[] destination = {midpoint, midpoint};
+		int input = 277678;
+		int maxVal = 0;
+		int maxIndex = 0;
+		int distance = 0;
+		int[] pos = new int[2];
+		int midpoint = 0;
+		boolean isCornerFound = false;
+		int rslt = 0;
+		int i = 1;
 		
-		int distance = calcManhattanDistance(getCoords(inputMaxValDiff, indexSize), destination);
+		while(!isCornerFound) {
+			maxVal = i % 2 != 0 ? (int) Math.pow(i, 2) >= input ? (int) Math.pow(i, 2) : 0 : 0;
+			if(maxVal > 0) isCornerFound = true; else i++;
+		}
 		
-		System.out.println(String.valueOf(distance));
+		maxIndex = (int) Math.sqrt((double) maxVal) - 1;
+		distance = maxVal - input;
+		midpoint = maxIndex / 2;
+		
+		rslt = calcManhattanDistance(getCoords(distance, maxIndex), midpoint);
+		
+		System.out.println("Distance: " + String.valueOf(rslt));
 		
 	}
 	
@@ -24,7 +36,6 @@ public class Main {
 		//so the value is defined as row^2 or column^2. the inverse being
 		//the sqrt of the value at that index being the size of both dimensions an the 2d array.
 		
-		System.out.println("Difference: " + String.valueOf(difference) + " Size: " + String.valueOf(size));
 		
 		if(difference <= size) { //if the value diff is less than or equal to the size of the row
 			coordinate[0] = size; // x = last row
@@ -53,13 +64,10 @@ public class Main {
 		return coordinate;
 	}
 	
-	private static int calcManhattanDistance(int[] p, int[] q) {
+	private static int calcManhattanDistance(int[] p, int q) {
 		int result = 0;
 		
-		System.out.println("Start: [" + String.valueOf(p[0])+ ", " + String.valueOf(p[1]) +
-		"] End: [" + String.valueOf(q[0]) + ", " + String.valueOf(q[1]) + "]");
-		
-		result = Math.abs(p[0] - q[0]) + Math.abs(p[1] - q[1]);
+		result = Math.abs(p[0] - q) + Math.abs(p[1] - q);
 		
 		return result;
 	}
