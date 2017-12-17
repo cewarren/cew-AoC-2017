@@ -1,5 +1,9 @@
 package com.cew.spiralmemory;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Main {
 
 	public static final int UP = 0;
@@ -70,6 +74,23 @@ public class Main {
 		result = Math.abs(p[0] - q) + Math.abs(p[1] - q);
 		
 		return result;
+	}
+	
+	private static int calcNextSeq(int input) {
+		int rslt = 0;
+		List<List<Integer>> spiral = new ArrayList<List<Integer>>();
+		
+		List<Integer> temp = new ArrayList<Integer>();
+		
+		temp.
+		
+		
+		
+		currRow.add(1);
+		currRow.add(1);
+		
+		
+		return rslt;
 	}
 
 }
